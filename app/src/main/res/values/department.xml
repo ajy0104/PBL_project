@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="부서">
+        <item>인사부</item>
+        <item>총무부</item>
+        <item>영업부</item>
+        <item>마케팅부</item>
+        <item>화계부</item>
+    </string-array>
+</resources>
