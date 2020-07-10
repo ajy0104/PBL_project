@@ -8,27 +8,65 @@ public class MemberBean {
 
     public String memberNum;
     public String password;
+    public String userName;
+    public String birth;
+    public String position;
+    public String department;
 
     public MemberBean(String memberNum, String password){
         this.memberNum = memberNum;
         this.password = password;
     }
 
-    public String getUserName(){
+    /* Getter */
+    public String getMemberNum() {
         return memberNum;
     }
 
-    public void setUserName(){
-        this.memberNum = memberNum;
-    }
-
-    public String getPassword(){
+    public String getPassword() {
         return password;
     }
 
-    public void setPassword(){
+    public String getUserName() {
+        return userName;
+    }
+
+    public String getBirth() {
+        return birth;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+
+    /* Setter */
+    public void setMemberNum(String memberNum) {
+        this.memberNum = memberNum;
+    }
+
+    public void setPassword(String password) {
         this.password = password;
     }
 
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public void setBirth(String birth) {
+        this.birth = birth;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
 
 }
