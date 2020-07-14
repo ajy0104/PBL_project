@@ -33,7 +33,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private DatabaseReference mReference;
     private DatabaseReference mr;
-    private ChildEventListener mChild; /////
+    private ChildEventListener mChild;
     private boolean verify = false;
     private boolean exist = true;
     MemberBean mb = new MemberBean();
