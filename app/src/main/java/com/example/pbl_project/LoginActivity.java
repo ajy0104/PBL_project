@@ -19,7 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText mEdtId;
-    private  EditText mEdtPw;
+    private EditText mEdtPw;
 
     private DatabaseReference mReference;
 
@@ -35,8 +35,7 @@ public class LoginActivity extends AppCompatActivity {
         mEdtPw=findViewById(R.id.edtPw);
 
 
-        mReference = FirebaseDatabase.getInstance().getReference();
-
+        mReference = FirebaseDatabase.getInstance().getReference().child("Employee");
         mBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {//클릭이벤트 등록
@@ -44,9 +43,9 @@ public class LoginActivity extends AppCompatActivity {
                 if((mEdtId.getText().toString().length() == 0) ||( mEdtPw.getText().toString().length() == 0)) {
                     Toast.makeText(LoginActivity.this,"사원번호 또는 패스워드를 입력하세요.",Toast.LENGTH_SHORT).show();
                     return;
+                }else {
+                    login();
                 }
-
-
             }
         });
 
@@ -64,18 +63,24 @@ public class LoginActivity extends AppCompatActivity {
         mReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot!=null && dataSnapshot.exists()) {
+                    String EmployeeNum = dataSnapshot.child(mEdtId.getText().toString()).child("employeeNumber").getValue().toString();
+                    String PassWord = dataSnapshot.child(mEdtId.getText().toString()).child("password").getValue().toString();
+                    String Name = dataSnapshot.child(mEdtId.getText().toString()).child("name").getValue().toString();
 
-                if( dataSnapshot.getValue(MemberBean.class).getUserName().equals( mEdtId.getText().toString() ) &&
-                        dataSnapshot.getValue(MemberBean.class).getPassword().equals( mEdtPw.getText().toString() )  ) {
-                    Toast.makeText(LoginActivity.this,
-                            dataSnapshot.getValue(MemberBean.class).getUserName() + "님 환영 합니다.", Toast.LENGTH_SHORT).show();
+                    if (EmployeeNum.equals(mEdtId.getText().toString()) &&
+                            PassWord.equals(mEdtPw.getText().toString())) {
+                        Toast.makeText(LoginActivity.this,
+                                Name + "님 환영 합니다.", Toast.LENGTH_SHORT).show();
 
-                } else{
-                    Toast.makeText(LoginActivity.this,
-                            "사원번호, 패스워드가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(i);
+
+                    } else {
+                        Toast.makeText(LoginActivity.this,
+                                "사원번호, 패스워드가 \n일치하지 않습니다.", Toast.LENGTH_SHORT).show();
+                    }
                 }
-
-
 
             }
 
