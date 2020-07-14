@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -14,15 +15,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.HashMap;
-import java.util.Iterator;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -31,14 +29,10 @@ public class RegisterActivity extends AppCompatActivity {
     TextView txtVerify;
     Spinner spnPosition, spnDepartment;
 
+//    private DatabaseReference mReference;
     private DatabaseReference mReference;
-    private DatabaseReference mr;
-    private ChildEventListener mChild;
     private boolean verify = false;
-    private boolean exist = true;
     MemberBean mb = new MemberBean();
-    private FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
-
 
 
     @Override
@@ -61,54 +55,46 @@ public class RegisterActivity extends AppCompatActivity {
         spnDepartment = findViewById(R.id.spnDepartment);
 
         // firebase 정의 및 데이터읽기
-        mReference = FirebaseDatabase.getInstance().getReference();
-        mr = FirebaseDatabase.getInstance().getReference().child("Employee");
+        //mReference = FirebaseDatabase.getInstance().getReference();
+        mReference = FirebaseDatabase.getInstance().getReference().child("Employee");
 
         // 인증하기 버튼 눌렀을 때
         btnVerify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String name = editName.getText().toString();
-                final String birth = editBirth.getText().toString();
-                final String position = spnPosition.getSelectedItem().toString();
-                final String department = spnDepartment.getSelectedItem().toString();
-                final String number = editNumber.getText().toString();
 
-                if(TextUtils.isEmpty(name) || TextUtils.isEmpty(birth) || TextUtils.isEmpty(number)){
+                if(TextUtils.isEmpty(editName.getText().toString()) || TextUtils.isEmpty(editBirth.getText().toString()) || TextUtils.isEmpty(editNumber.getText().toString())){
                     Toast.makeText(RegisterActivity.this, "모든 칸을 입력해주세요.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                mr.addValueEventListener(new ValueEventListener() {
+
+                mReference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         //Iterator<DataSnapshot> child = snapshot.getChildren().iterator();
                         //while (child.hasNext()){
-                        mb.setUserName(snapshot.child(number).child("name").getValue().toString());
-                        mb.setMemberNum(snapshot.child(number).child("employeeNumber").getValue().toString());
-                        mb.setBirth(snapshot.child(number).child("birth").getValue().toString());
-                        mb.setPosition(snapshot.child(number).child("position").getValue().toString());
-                        mb.setDepartment(snapshot.child(number).child("department").getValue().toString());
 
-                        String mbName = mb.getUserName();
-                        String mbBirth = mb.getBirth();
-                        String mbPosition = mb.getPosition();
-                        String mbDepartment = mb.getDepartment();
-                        String mbNumber = mb.getMemberNum();
-                        String editName = name;
-                        String editBirth = birth;
-                        String editPosition = position;
-                        String editDepartment = department;
-                        String editNum = number;
+                        if(snapshot.child(editNumber.getText().toString()).hasChild("password")) {
+                            Toast.makeText(RegisterActivity.this, "이미 등록된 회원입니다.", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
 
-                        if(mb.getUserName().equals(name) && mb.getMemberNum().equals(number) && mb.getBirth().equals(birth) && mb.getPosition().equals(position) && mb.getDepartment().equals(department)){
+                        mb.setUserName(snapshot.child(editNumber.getText().toString()).child("name").getValue().toString());
+                        mb.setEmployeeNumber(snapshot.child(editNumber.getText().toString()).child("employeeNumber").getValue().toString());
+                        mb.setBirth(snapshot.child(editNumber.getText().toString()).child("birth").getValue().toString());
+                        mb.setPosition(snapshot.child(editNumber.getText().toString()).child("position").getValue().toString());
+                        mb.setDepartment(snapshot.child(editNumber.getText().toString()).child("department").getValue().toString());
+
+                        if(mb.getUserName().equals(editName.getText().toString()) && mb.getEmployeeNumber().equals(editNumber.getText().toString())&& mb.getBirth().equals(editBirth.getText().toString())&& mb.getPosition().equals(spnPosition.getSelectedItem().toString()) && mb.getDepartment().equals(spnDepartment.getSelectedItem().toString())){
                             Toast.makeText(RegisterActivity.this, "인증 성공.", Toast.LENGTH_SHORT).show();
                             txtVerify.setText("인증 성공");
+                            txtVerify.setTextColor(Color.RED);
                             verify = true;
                         } else {
-                            txtVerify.setText("인증 실패"); verify=false; return;
+                            txtVerify.setText("인증 실패"); verify=false; txtVerify.setTextColor(Color.RED); return;
                         }
-                        
+
                         //}
                     }
 
@@ -125,21 +111,26 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String password = editPassword.getText().toString();
-                String passwordConfirm = editPasswordConfirm.getText().toString();
 
-                if(TextUtils.isEmpty(password) || TextUtils.isEmpty(passwordConfirm)){
+                if(verify == false){
+                    Toast.makeText(RegisterActivity.this, "인증이 되지 않았습니다. 사원 인증부터 받으세요.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if(TextUtils.isEmpty(editPassword.getText().toString()) || TextUtils.isEmpty(editPasswordConfirm.getText().toString())){
                     Toast.makeText(RegisterActivity.this, "패스워드와 패스워드확인을 입력해주세요.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                if(password.length() < 7){
+                if(editPassword.getText().toString().length() < 7){
                     Toast.makeText(RegisterActivity.this, "패스워드는 7자 이상이어야합니다.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                if(password.equals(passwordConfirm)){
+                if(editPassword.getText().toString().equals(editPasswordConfirm.getText().toString())){
                     //mReference.child("Employee").child(editNumber.getText().toString()).push().setValue(mb.getPassword());
+                    mb.setPassword(editPassword.getText().toString());
+                    mReference.child(mb.getEmployeeNumber()).child("password").setValue(mb.getPassword());
                     Toast.makeText(RegisterActivity.this, "회원가입 성공.", Toast.LENGTH_SHORT).show();
                     // 로그인 액티비티로 이동
                     Intent i = new Intent(RegisterActivity.this, LoginActivity.class);

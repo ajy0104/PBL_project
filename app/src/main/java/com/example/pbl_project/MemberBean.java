@@ -6,21 +6,21 @@ public class MemberBean {
         // Default constructor required for calls to DataSnapshot.getValue(MemberBean.class)
     }
 
-    public String memberNum;
+    public String employeeNumber;
     public String password;
     public String userName;
     public String birth;
     public String position;
     public String department;
 
-    public MemberBean(String memberNum, String password){
-        this.memberNum = memberNum;
+    public MemberBean(String employNumber, String password){
+        this.employeeNumber = employeeNumber;
         this.password = password;
     }
 
     /* Getter */
-    public String getMemberNum() {
-        return memberNum;
+    public String getEmployeeNumber() {
+        return employeeNumber;
     }
 
     public String getPassword() {
@@ -45,8 +45,8 @@ public class MemberBean {
 
 
     /* Setter */
-    public void setMemberNum(String memberNum) {
-        this.memberNum = memberNum;
+    public void setEmployeeNumber(String employeeNumber) {
+        this.employeeNumber = employeeNumber;
     }
 
     public void setPassword(String password) {
