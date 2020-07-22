@@ -27,7 +27,7 @@ public class FragmentFirst extends Fragment {
     private ArrayList<String> dayList;     // 요일 저장 할 리스트
     private GridView gridView;  // 그리드뷰
     private Calendar mCal; // 캘린더변수
-    private Button btnPrev, btnNext;
+    private Button btnLastMonth, btnNextMonth;
 
     public FragmentFirst(){}
 
@@ -84,7 +84,10 @@ public class FragmentFirst extends Fragment {
 
 
         return layout;
-    }
+
+    } //onCreateView
+
+
     /**
      * 해당 월에 표시할 일 수 구함
      *
@@ -164,4 +167,4 @@ public class FragmentFirst extends Fragment {
         TextView tvItemGridView;
     }
 
-}
+} // FragmentFirst
