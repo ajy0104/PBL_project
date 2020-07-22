@@ -20,9 +20,9 @@ public class pagerAdapter extends FragmentStatePagerAdapter {
         switch(position)
         {
             case 0:
-                return new FirstFragment();
+                return new FragmentFirst();
             case 1:
-                return new SecondFragment();
+                return new FragmentSecond();
             default:
                 return null;
         }
