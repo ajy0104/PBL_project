@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="일정명">
+        <item>미팅</item>
+        <item>휴가</item>
+        <item>반차</item>
+    </string-array>
+</resources>
