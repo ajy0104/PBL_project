@@ -1,13 +1,17 @@
 package com.example.pbl_project;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -26,6 +30,7 @@ public class ScheduleActivity extends AppCompatActivity {
         private ArrayList<String> dayList; //일 저장할 리스트
         private GridView gridView; //그리드 뷰
         private Calendar mCal; //캘린더 변수
+        private TextView txtgrid;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,6 +39,10 @@ public class ScheduleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_schedule);
         txtYM = (TextView)findViewById(R.id.txtYM);
         gridView = (GridView)findViewById(R.id.gridview);
+
+        Button btnPrev = findViewById(R.id.btnPrev);
+        Button btnNext = findViewById(R.id.btnNext);
+
 
         //오늘 날짜 세팅
         long now = System.currentTimeMillis();
@@ -67,7 +76,73 @@ public class ScheduleActivity extends AppCompatActivity {
         }
         setCalendarDate(mCal.get(Calendar.MONTH)+1);
         gridAdapter = new GridAdapter(getApplicationContext(), dayList);
-        gridView.setAdapter(gridAdapter);
+        gridView.setAdapter(gridAdapter); //초기 설정에만 사용
+
+
+        btnPrev.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //dayList = new ArrayList<String>();
+                mCal = Calendar.getInstance(); //캘린더 객체 생성(시스템의 현재 날짜, 시간 정보)
+                //현재 날짜 텍스트뷰에 뿌리기
+                String PrevMonth = String.valueOf(Integer.parseInt(curMonthFormat.format(date))-1);
+                txtYM.setText(Integer.parseInt(curYearFormat.format(date))+".0"+PrevMonth);
+
+
+                //이번달 1일 무슨요일인지 판단 mCal.set(Year, Month, Day)
+                mCal.set(Integer.parseInt(curYearFormat.format(date)),Integer.parseInt(curMonthFormat.format(date))-1-1, 1);
+
+                int dayNum = mCal.get(Calendar.DAY_OF_WEEK); //calendar가 가리키는 특정 날짜가 무슨요일인지 알 수 있음
+                dayList = new ArrayList<String>();
+                //1일 - 요일 매칭 시키기 위해 공백 ADD
+                for(int i = 1; i<dayNum; i++){
+                    dayList.add("");
+                }
+                setCalendarDate(mCal.get(Calendar.MONTH)+1);
+
+                gridAdapter.notifyDataSetChanged();
+
+
+
+            }
+        });
+
+
+        btnNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dayList.clear();
+                mCal = Calendar.getInstance(); //캘린더 객체 생성(시스템의 현재 날짜, 시간 정보)
+
+                //현재 날짜 텍스트뷰에 뿌리기
+                String NextMonth = String.valueOf(Integer.parseInt(curMonthFormat.format(date))+1);
+                txtYM.setText(Integer.parseInt(curYearFormat.format(date))+".0"+NextMonth);
+
+                //이번달 1일 무슨요일인지 판단 mCal.set(Year, Month, Day)
+                mCal.set(Integer.parseInt(curYearFormat.format(date)),Integer.parseInt(curMonthFormat.format(date)), 1);
+                int dayNum = mCal.get(Calendar.DAY_OF_WEEK); //calendar가 가리키는 특정 날짜가 무슨요일인지 알 수 있음
+
+                //1일 - 요일 매칭 시키기 위해 공백 ADD
+                for(int i = 1; i<dayNum; i++){
+                    dayList.add("");
+                }
+                setCalendarDate(mCal.get(Calendar.MONTH)+1);
+                gridAdapter.notifyDataSetChanged();
+
+
+            }
+        });
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView parent, View view, int position, long id) {
+                Intent i = new Intent(ScheduleActivity.this, Add_schedule.class);
+                startActivity(i);
+
+            }
+        });
 
     }//onCreate()
 
@@ -79,56 +154,7 @@ public class ScheduleActivity extends AppCompatActivity {
         }
 
     }
-    public class GridAdapter extends BaseAdapter {
-        private final List<String> list;
-        private final LayoutInflater inflater;
 
-        public GridAdapter(Context context, List<String> list) {
-            this.list = list;
-            this.inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        }
 
-        @Override
-        public int getCount() {
-            return list.size();
-        }
 
-        @Override
-        public Object getItem(int position) {
-            return list.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder holder = null;
-            if(convertView == null){
-                convertView = inflater.inflate(R.layout.calendar_gridview, parent,false);
-                holder = new ViewHolder();
-                holder.txtGrid = (TextView)convertView.findViewById(R.id.txtGrid);
-                convertView.setTag(holder);
-            }else{
-                holder = (ViewHolder)convertView.getTag();
-            }
-            holder.txtGrid.setText(""+getItem(position));
-
-            //해당 날짜 텍스트 컬러 변경
-            mCal = Calendar.getInstance();
-            //오늘 day가져옴
-            Integer today =  mCal.get(Calendar.DAY_OF_MONTH);
-            String sToday = String.valueOf(today);
-            if (sToday.equals(getItem(position))){// 오늘 day 텍스트 컬러 변경
-                holder.txtGrid.setTextColor(getResources().getColor(R.color.colorPrimary));
-            }
-            return convertView;
-        }
-
-    }
-    private class ViewHolder{
-        TextView txtGrid;
-    }
 }
