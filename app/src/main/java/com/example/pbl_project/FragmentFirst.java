@@ -27,6 +27,7 @@ public class FragmentFirst extends Fragment {
     private ArrayList<String> dayList;     // 요일 저장 할 리스트
     private GridView gridView;  // 그리드뷰
     private Calendar mCal; // 캘린더변수
+    private Calendar mThisCal;
 
     private TextView txtTitle;
     private Button btnLastMonth, btnNextMonth;
@@ -209,9 +210,10 @@ public class FragmentFirst extends Fragment {
             holder.tvItemGridView.setText("" + getItem(position));
 
             //해당 날짜 텍스트 컬러,배경 변경
-            mCal = Calendar.getInstance();
+            //mCal = Calendar.getInstance();
+            mThisCal = Calendar.getInstance();
             //오늘 day 가져옴
-            Integer today = mCal.get(Calendar.DAY_OF_MONTH);
+            Integer today = mThisCal.get(Calendar.DAY_OF_MONTH);
 
             String sToday = String.valueOf(today);
             if (sToday.equals(getItem(position))) { //오늘 day 텍스트 컬러 변경
