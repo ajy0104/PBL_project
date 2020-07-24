@@ -30,7 +30,8 @@ public class FragmentFirst extends Fragment {
     private Calendar mThisCal;
 
     private TextView txtTitle;
-    private Button btnLastMonth, btnNextMonth;
+    private Button btnLastMonth, btnNextMonth, btnAttendance;
+
 
     public FragmentFirst(){}
 
@@ -50,6 +51,7 @@ public class FragmentFirst extends Fragment {
         gridView = (GridView)layout.findViewById(R.id.gridview1);
         btnLastMonth = layout.findViewById(R.id.btnLastMonth);
         btnNextMonth = layout.findViewById(R.id.btnNextMonth);
+        btnAttendance = layout.findViewById(R.id.btnAttendance);
 
         long now = System.currentTimeMillis();
         final Date date = new Date(now);
@@ -134,6 +136,14 @@ public class FragmentFirst extends Fragment {
                 }
 
                 setCalendarDate(mCal.get(Calendar.MONTH) + 1);
+            }
+        });
+
+
+        btnAttendance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
 

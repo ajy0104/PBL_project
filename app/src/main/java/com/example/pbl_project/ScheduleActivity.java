@@ -86,13 +86,16 @@ public class ScheduleActivity extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                    mCal.set(Calendar.YEAR, Calendar.MONTH + 1);
+                    //mCal.set(Calendar.YEAR, Calendar.MONTH + 1);
                     //dayList.clear();
                     dayList= new ArrayList<String>();
+                    mCal.add(Calendar.MONTH,-1);
+                    txtYM.setText(mCal.get(Calendar.YEAR) + "년 "
+                            + (mCal.get(Calendar.MONTH) + 1) + "월");
 
                     //현재 날짜 텍스트뷰에 뿌리기
-                    String PrevMonth = String.valueOf(Integer.parseInt(curMonthFormat.format(date)) - 1);
-                    txtYM.setText(Integer.parseInt(curYearFormat.format(date)) + ".0" + PrevMonth);
+//                    String PrevMonth = String.valueOf(Integer.parseInt(curMonthFormat.format(date)) - 1);
+//                    txtYM.setText(Integer.parseInt(curYearFormat.format(date)) + ".0" + PrevMonth);
 
                     //이번달 1일 무슨요일인지 판단
                     int dayNum = mCal.get(Calendar.DAY_OF_WEEK); //calendar가 가리키는 특정 날짜가 무슨요일인지 알 수 있음
