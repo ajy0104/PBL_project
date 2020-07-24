@@ -61,10 +61,15 @@ public class GridAdapter extends BaseAdapter {
 
         //해당 날짜 텍스트 컬러 변경
         mCal = Calendar.getInstance();
+
         //오늘 day가져옴
         Integer today =  mCal.get(Calendar.DAY_OF_MONTH);
-
         String sToday = String.valueOf(today);
+
+        Integer Year = mCal.get(Calendar.YEAR);
+        Integer Month = mCal.get(Calendar.MONTH)+1;
+        String sMonth = String.valueOf(Month);
+
 
         if (sToday.equals(getItem(position))){// 오늘 day 텍스트 컬러 변경
             holder.txtGrid.setTextColor(convertView.getResources().getColor(R.color.colorPrimary));

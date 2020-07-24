@@ -54,7 +54,7 @@ public class ScheduleActivity extends AppCompatActivity {
         final SimpleDateFormat curDayFormat = new SimpleDateFormat("dd", Locale.KOREA);
 
         //현재 날짜 텍스트뷰에 뿌리기
-        txtYM.setText(curYearFormat.format(date)+"."+curMonthFormat.format(date));
+        txtYM.setText(curYearFormat.format(date)+"년 "+curMonthFormat.format(date)+"월");
 
         //gridview 요일 표시
         dayList = new ArrayList<String>();
@@ -86,16 +86,11 @@ public class ScheduleActivity extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                    //mCal.set(Calendar.YEAR, Calendar.MONTH + 1);
-                    //dayList.clear();
                     dayList= new ArrayList<String>();
                     mCal.add(Calendar.MONTH,-1);
                     txtYM.setText(mCal.get(Calendar.YEAR) + "년 "
-                            + (mCal.get(Calendar.MONTH) + 1) + "월");
+                            + (mCal.get(Calendar.MONTH) + 1)+"월");
 
-                    //현재 날짜 텍스트뷰에 뿌리기
-//                    String PrevMonth = String.valueOf(Integer.parseInt(curMonthFormat.format(date)) - 1);
-//                    txtYM.setText(Integer.parseInt(curYearFormat.format(date)) + ".0" + PrevMonth);
 
                     //이번달 1일 무슨요일인지 판단
                     int dayNum = mCal.get(Calendar.DAY_OF_WEEK); //calendar가 가리키는 특정 날짜가 무슨요일인지 알 수 있음
@@ -106,7 +101,7 @@ public class ScheduleActivity extends AppCompatActivity {
                     }
 
                     setCalendarDate(mCal.get(Calendar.MONTH) + 1);
-                    //gridAdapter.notifyDataSetChanged();
+
 
 
             }//onClick()
@@ -117,14 +112,11 @@ public class ScheduleActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                dayList = new ArrayList<String>();
+                dayList= new ArrayList<String>();
+                mCal.add(Calendar.MONTH,+1);
+                txtYM.setText(mCal.get(Calendar.YEAR) + "년 "
+                        + (mCal.get(Calendar.MONTH) + 1)+"월");
 
-                //현재 날짜 텍스트뷰에 뿌리기
-                String NextMonth = String.valueOf(Integer.parseInt(curMonthFormat.format(date))+1);
-                txtYM.setText(Integer.parseInt(curYearFormat.format(date))+".0"+NextMonth);
-
-                //이번달 1일 무슨요일인지 판단 mCal.set(Year, Month, Day)
-                mCal.set(Integer.parseInt(curYearFormat.format(date)),Integer.parseInt(curMonthFormat.format(date)), 1);
                 int dayNum = mCal.get(Calendar.DAY_OF_WEEK); //calendar가 가리키는 특정 날짜가 무슨요일인지 알 수 있음
 
                 //1일 - 요일 매칭 시키기 위해 공백 ADD
@@ -132,8 +124,6 @@ public class ScheduleActivity extends AppCompatActivity {
                     dayList.add("");
                 }
                 setCalendarDate(mCal.get(Calendar.MONTH)+1);
-
-                //gridAdapter.notifyDataSetChanged();
 
 
             }
@@ -157,6 +147,10 @@ public class ScheduleActivity extends AppCompatActivity {
         for(int i =0; i<mCal.getActualMaximum(Calendar.DAY_OF_MONTH); i++){
             dayList.add(""+(i+1));
         }
+
+        /*adapter 내용 업데이트 부분 */
+        gridAdapter = new GridAdapter(getApplicationContext(), dayList);
+        gridView.setAdapter(gridAdapter); //초기 설정에만 사용
 
     }
 
