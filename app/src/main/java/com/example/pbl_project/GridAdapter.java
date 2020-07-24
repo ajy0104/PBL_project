@@ -1,10 +1,14 @@
 package com.example.pbl_project;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.Calendar;
@@ -15,10 +19,13 @@ public class GridAdapter extends BaseAdapter {
     private final LayoutInflater inflater;
     private Calendar mCal; //캘린더 변수
 
+
     public GridAdapter(Context context, List<String> list) {
         this.list = list;
         this.inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
     }
+
 
     @Override
     public int getCount() {
@@ -35,13 +42,17 @@ public class GridAdapter extends BaseAdapter {
         return position;
     }
 
+
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
         ViewHolder holder = null;
         if(convertView == null){
             convertView = inflater.inflate(R.layout.calendar_gridview, parent,false);
             holder = new ViewHolder();
             holder.txtGrid = (TextView)convertView.findViewById(R.id.txtGrid);
+            holder.txtSchedule = (TextView)convertView.findViewById(R.id.txtSchedule);
             convertView.setTag(holder);
         }else{
             holder = (ViewHolder)convertView.getTag();
@@ -59,10 +70,17 @@ public class GridAdapter extends BaseAdapter {
             holder.txtGrid.setTextColor(convertView.getResources().getColor(R.color.colorPrimary));
         }
         return convertView;
+
+
+        //holder.txtSchedule.setText();
+
     }
 
     private class ViewHolder{
         TextView txtGrid;
+        TextView txtSchedule;
+
+
     }
 }
 

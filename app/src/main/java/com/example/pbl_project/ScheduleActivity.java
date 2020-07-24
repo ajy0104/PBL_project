@@ -32,6 +32,7 @@ public class ScheduleActivity extends AppCompatActivity {
         private Calendar mCal; //캘린더 변수
         private TextView txtgrid;
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,41 +80,41 @@ public class ScheduleActivity extends AppCompatActivity {
         gridView.setAdapter(gridAdapter); //초기 설정에만 사용
 
 
+
         btnPrev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                //dayList = new ArrayList<String>();
-                mCal = Calendar.getInstance(); //캘린더 객체 생성(시스템의 현재 날짜, 시간 정보)
-                //현재 날짜 텍스트뷰에 뿌리기
-                String PrevMonth = String.valueOf(Integer.parseInt(curMonthFormat.format(date))-1);
-                txtYM.setText(Integer.parseInt(curYearFormat.format(date))+".0"+PrevMonth);
+
+                    mCal.set(Calendar.YEAR, Calendar.MONTH + 1);
+                    //dayList.clear();
+                    dayList= new ArrayList<String>();
+
+                    //현재 날짜 텍스트뷰에 뿌리기
+                    String PrevMonth = String.valueOf(Integer.parseInt(curMonthFormat.format(date)) - 1);
+                    txtYM.setText(Integer.parseInt(curYearFormat.format(date)) + ".0" + PrevMonth);
+
+                    //이번달 1일 무슨요일인지 판단
+                    int dayNum = mCal.get(Calendar.DAY_OF_WEEK); //calendar가 가리키는 특정 날짜가 무슨요일인지 알 수 있음
+
+                    //1일 - 요일 매칭 시키기 위해 공백 ADD
+                    for (int i = 1; i < dayNum; i++) {
+                        dayList.add("");
+                    }
+
+                    setCalendarDate(mCal.get(Calendar.MONTH) + 1);
+                    //gridAdapter.notifyDataSetChanged();
 
 
-                //이번달 1일 무슨요일인지 판단 mCal.set(Year, Month, Day)
-                mCal.set(Integer.parseInt(curYearFormat.format(date)),Integer.parseInt(curMonthFormat.format(date))-1-1, 1);
-
-                int dayNum = mCal.get(Calendar.DAY_OF_WEEK); //calendar가 가리키는 특정 날짜가 무슨요일인지 알 수 있음
-                dayList = new ArrayList<String>();
-                //1일 - 요일 매칭 시키기 위해 공백 ADD
-                for(int i = 1; i<dayNum; i++){
-                    dayList.add("");
-                }
-                setCalendarDate(mCal.get(Calendar.MONTH)+1);
-
-                gridAdapter.notifyDataSetChanged();
-
-
-
-            }
+            }//onClick()
         });
 
 
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dayList.clear();
-                mCal = Calendar.getInstance(); //캘린더 객체 생성(시스템의 현재 날짜, 시간 정보)
+
+                dayList = new ArrayList<String>();
 
                 //현재 날짜 텍스트뷰에 뿌리기
                 String NextMonth = String.valueOf(Integer.parseInt(curMonthFormat.format(date))+1);
@@ -128,7 +129,8 @@ public class ScheduleActivity extends AppCompatActivity {
                     dayList.add("");
                 }
                 setCalendarDate(mCal.get(Calendar.MONTH)+1);
-                gridAdapter.notifyDataSetChanged();
+
+                //gridAdapter.notifyDataSetChanged();
 
 
             }
