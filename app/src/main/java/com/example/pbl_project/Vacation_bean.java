@@ -9,6 +9,8 @@ public class Vacation_bean {
     private String start_date;
     private String end_date;
     private String reason;
+    private String teamjang_num;
+    private String sasu_num;
 
     //get
     public String getStart_date(){
@@ -23,6 +25,14 @@ public class Vacation_bean {
         return reason;
     }
 
+    public String getTeamjang_num() {
+        return teamjang_num;
+    }
+
+    public String getSasu_num() {
+        return sasu_num;
+    }
+
     //set
     public void setStart_date(String start_date){
         this.start_date = start_date;
@@ -34,6 +44,14 @@ public class Vacation_bean {
 
     public void setReason(String reason){
         this.reason = reason;
+    }
+
+    public void setTeamjang_num(String teamjang_num){
+        this.teamjang_num = teamjang_num;
+    }
+
+    public void setSasu_num(String sasu_num){
+        this.sasu_num = sasu_num;
     }
 
 }

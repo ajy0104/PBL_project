@@ -2,9 +2,12 @@ package com.example.pbl_project;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,28 +29,32 @@ public class MainActivity extends AppCompatActivity {
         vacation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent i = new Intent(MainActivity.this, vacation.class);
+                startActivity(i);
             }
         });
 
         security.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                /*Intent i = new Intent(MainActivity.this, ???.class);
+                startActivity(i); */
             }
         });
 
         User_attend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                /*Intent i = new Intent(MainActivity.this, ???.class);
+                startActivity(i);*/
             }
         });
 
         scedule.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent i = new Intent(MainActivity.this, ScheduleActivity.class);
+                startActivity(i);
             }
         });
 
