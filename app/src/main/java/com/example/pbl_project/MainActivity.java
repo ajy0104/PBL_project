@@ -16,6 +16,8 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton User_attend;
     private ImageButton scedule;
 
+    public static ArrayList<Vacation_bean> vacation_chart = new ArrayList<Vacation_bean>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

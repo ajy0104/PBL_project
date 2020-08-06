@@ -11,6 +11,7 @@ public class Vacation_bean {
     private String reason;
     private String teamjang_num;
     private String sasu_num;
+    private boolean sasu_flag, teamjang_flag;
 
     //get
     public String getStart_date(){
@@ -33,6 +34,14 @@ public class Vacation_bean {
         return sasu_num;
     }
 
+    public boolean isSasu_flag() {
+        return sasu_flag;
+    }
+
+    public boolean isTeamjang_flag() {
+        return teamjang_flag;
+    }
+
     //set
     public void setStart_date(String start_date){
         this.start_date = start_date;
@@ -53,5 +62,9 @@ public class Vacation_bean {
     public void setSasu_num(String sasu_num){
         this.sasu_num = sasu_num;
     }
+
+    public void setSasu_flag(boolean sasu_flag) { this.sasu_flag = sasu_flag; }
+
+    public void setTeamjang_flag(boolean sasu_flag) { this.teamjang_flag = teamjang_flag; }
 
 }

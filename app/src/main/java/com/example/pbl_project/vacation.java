@@ -13,21 +13,23 @@ import android.widget.Toast;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+import static com.example.pbl_project.MainActivity.vacation_chart;
+
 public class vacation extends AppCompatActivity {
 
     private EditText edt_reason, edt_sasu, edt_teamjang;
     private Spinner start_year, start_month, start_date, end_year, end_month, end_date, spn_reason;
     private Button btn_submit;
+    private Vacation_bean vc;
 
-    ArrayList<Vacation_bean> vacation_chart = new ArrayList<Vacation_bean>();
-
-    Vacation_bean vc = new Vacation_bean();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vacation);
 
+
+        vc = new Vacation_bean();
 
         start_year = findViewById(R.id.start_year);
         start_month = findViewById(R.id.start_month);
