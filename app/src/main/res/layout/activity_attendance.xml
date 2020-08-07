@@ -6,11 +6,24 @@
     android:background="#00FFEB3B"
     android:orientation="vertical">
 
-
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/vp"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/vpMap"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="8">
 
+        </androidx.viewpager.widget.ViewPager>
+
+        <Button
+            android:id="@+id/btnMapAttendance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="출근하기" />
+
+    </LinearLayout>
 </RelativeLayout>
