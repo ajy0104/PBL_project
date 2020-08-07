@@ -1,11 +1,16 @@
 package com.example.pbl_project;
 
 public class ScheduleItem {
-    private String Schedule;
+    public String Schedule;
 
-    public void setSchedule(String schedule){
-        this.Schedule = schedule;
+    public ScheduleItem(){
+
     }
+
+    public void setSchedule(String Schedule){
+        this.Schedule = Schedule;
+    }
+
     public String getSchedule(){
         return Schedule;
     }

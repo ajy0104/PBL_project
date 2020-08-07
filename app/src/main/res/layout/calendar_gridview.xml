@@ -20,7 +20,7 @@
         android:textSize="18sp" />
 
     <TextView
-        android:id="@+id/txtSchedule"
+        android:id="@+id/txtSc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center" />

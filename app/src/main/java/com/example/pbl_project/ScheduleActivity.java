@@ -27,11 +27,12 @@ public class ScheduleActivity extends AppCompatActivity {
 
         private TextView txtYM; //연, 월 텍스트 뷰
         private GridAdapter gridAdapter; //그리드 뷰 어댑터
+        private GridAdapter ScheduleAdapter;
         private ArrayList<String> dayList; //일 저장할 리스트
+        private ArrayList<String> ScList;
         private GridView gridView; //그리드 뷰
         private Calendar mCal; //캘린더 변수
-        private TextView txtgrid;
-
+        private int selected;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,6 +41,7 @@ public class ScheduleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_schedule);
         txtYM = (TextView)findViewById(R.id.txtYM);
         gridView = (GridView)findViewById(R.id.gridview);
+
 
         Button btnPrev = findViewById(R.id.btnPrev);
         Button btnNext = findViewById(R.id.btnNext);
@@ -76,7 +78,7 @@ public class ScheduleActivity extends AppCompatActivity {
             dayList.add("");
         }
         setCalendarDate(mCal.get(Calendar.MONTH)+1);
-        gridAdapter = new GridAdapter(getApplicationContext(), dayList);
+        gridAdapter = new GridAdapter(getApplicationContext(), dayList, ScList);
         gridView.setAdapter(gridAdapter); //초기 설정에만 사용
 
 
@@ -91,7 +93,6 @@ public class ScheduleActivity extends AppCompatActivity {
                     txtYM.setText(mCal.get(Calendar.YEAR) + "년 "
                             + (mCal.get(Calendar.MONTH) + 1)+"월");
 
-
                     //이번달 1일 무슨요일인지 판단
                     int dayNum = mCal.get(Calendar.DAY_OF_WEEK); //calendar가 가리키는 특정 날짜가 무슨요일인지 알 수 있음
 
@@ -101,7 +102,6 @@ public class ScheduleActivity extends AppCompatActivity {
                     }
 
                     setCalendarDate(mCal.get(Calendar.MONTH) + 1);
-
 
 
             }//onClick()
@@ -133,13 +133,40 @@ public class ScheduleActivity extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView parent, View view, int position, long id) {
+
+                selected = Integer.parseInt(dayList.get(position));
                 Intent i = new Intent(ScheduleActivity.this, Add_schedule.class);
+                i.putExtra("날짜", dayList.get(position));
                 startActivity(i);
 
             }
         });
 
+
+
+        Intent sc_intent = getIntent();
+        Bundle intentExtras= sc_intent.getExtras();
+        ScList = new ArrayList<String>();
+        if(intentExtras != null) {
+
+            String schedule  =  intentExtras.getString("일정");
+            ScheduleItem SI = new ScheduleItem();
+            SI.setSchedule(schedule);
+            //ScList.set(selected,SI.getSchedule());
+            gridAdapter = new GridAdapter(getApplicationContext(),dayList, ScList);
+            gridAdapter.addItem(SI);
+            gridView.setAdapter(gridAdapter);
+        }
+
+
+
+        gridAdapter = new GridAdapter(getApplicationContext(),dayList, ScList);
+        gridView.setAdapter(gridAdapter); //초기 설정에만 사용
+
+
     }//onCreate()
+
+
 
     //해당월에 표시할 일 수 구하기
     private void setCalendarDate(int month){
@@ -149,10 +176,11 @@ public class ScheduleActivity extends AppCompatActivity {
         }
 
         /*adapter 내용 업데이트 부분 */
-        gridAdapter = new GridAdapter(getApplicationContext(), dayList);
+        gridAdapter = new GridAdapter(getApplicationContext(), dayList, ScList);
         gridView.setAdapter(gridAdapter); //초기 설정에만 사용
 
     }
+
 
 
 

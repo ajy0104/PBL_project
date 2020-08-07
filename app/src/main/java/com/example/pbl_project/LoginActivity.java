@@ -3,6 +3,7 @@ package com.example.pbl_project;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -74,6 +75,8 @@ public class LoginActivity extends AppCompatActivity {
                                 Name + "님 환영 합니다.", Toast.LENGTH_SHORT).show();
 
                         Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                        i.putExtra("사원번호",EmployeeNum);
+                        Log.d("log",EmployeeNum);
                         startActivity(i);
 
                     } else {

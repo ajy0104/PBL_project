@@ -1,16 +1,14 @@
 package com.example.pbl_project;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -18,12 +16,14 @@ public class GridAdapter extends BaseAdapter {
     private final List<String> list;
     private final LayoutInflater inflater;
     private Calendar mCal; //캘린더 변수
+    private final List<String> sclist;
+    ScheduleItem SI = new ScheduleItem();
 
 
-    public GridAdapter(Context context, List<String> list) {
+    public GridAdapter(Context context, List<String> list, List<String> sclist) {
         this.list = list;
         this.inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
+        this.sclist = sclist;
     }
 
 
@@ -42,6 +42,11 @@ public class GridAdapter extends BaseAdapter {
         return position;
     }
 
+    public void addItem(ScheduleItem SI){
+        sclist.add(SI.getSchedule());
+    }
+
+
 
 
     @Override
@@ -49,15 +54,20 @@ public class GridAdapter extends BaseAdapter {
 
         ViewHolder holder = null;
         if(convertView == null){
+
             convertView = inflater.inflate(R.layout.calendar_gridview, parent,false);
             holder = new ViewHolder();
             holder.txtGrid = (TextView)convertView.findViewById(R.id.txtGrid);
-            holder.txtSchedule = (TextView)convertView.findViewById(R.id.txtSchedule);
+            holder.txtSchedule = (TextView)convertView.findViewById(R.id.txtSc);
+
             convertView.setTag(holder);
         }else{
             holder = (ViewHolder)convertView.getTag();
         }
         holder.txtGrid.setText(""+getItem(position));
+        holder.txtSchedule.setText(""+sclist.get(position));
+
+
 
         //해당 날짜 텍스트 컬러 변경
         mCal = Calendar.getInstance();
@@ -77,7 +87,8 @@ public class GridAdapter extends BaseAdapter {
         return convertView;
 
 
-        //holder.txtSchedule.setText();
+
+
 
     }
 
