@@ -34,7 +34,7 @@ public class Add_schedule extends AppCompatActivity {
         Button btnSave = findViewById(R.id.btnSave);
 
         Intent intent = getIntent();
-        String ymn = intent.getExtras().getString("날짜");
+        final String ymn = intent.getExtras().getString("날짜");
         txtYMD.setText(ymn+"일 일정");
 
 
@@ -52,9 +52,11 @@ public class Add_schedule extends AppCompatActivity {
             public void onClick(View v) {
 
                 sc = spinner.getSelectedItem().toString();
+                //ScheduleItem SI = new ScheduleItem("");
                 //SI.setSchedule(sc);
                 Intent i = new Intent(Add_schedule.this, ScheduleActivity.class);
                 i.putExtra("일정",sc);
+                i.putExtra("index",ymn);
                 startActivity(i);
             }
         });

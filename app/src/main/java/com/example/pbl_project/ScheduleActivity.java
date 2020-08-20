@@ -27,12 +27,12 @@ public class ScheduleActivity extends AppCompatActivity {
 
         private TextView txtYM; //연, 월 텍스트 뷰
         private GridAdapter gridAdapter; //그리드 뷰 어댑터
-        private GridAdapter ScheduleAdapter;
-        private ArrayList<String> dayList; //일 저장할 리스트
-        private ArrayList<String> ScList;
+        //private ArrayList<String> dayList; //일 저장할 리스트
+        private ArrayList<ScheduleItem> dayList;
         private GridView gridView; //그리드 뷰
         private Calendar mCal; //캘린더 변수
-        private int selected;
+        private String seldate;
+        private int index;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,7 +59,9 @@ public class ScheduleActivity extends AppCompatActivity {
         txtYM.setText(curYearFormat.format(date)+"년 "+curMonthFormat.format(date)+"월");
 
         //gridview 요일 표시
-        dayList = new ArrayList<String>();
+        //dayList = new ArrayList<String>();
+        dayList = new ArrayList<ScheduleItem>();
+
         /*
         dayList.add("일");
         dayList.add("월");
@@ -75,10 +77,13 @@ public class ScheduleActivity extends AppCompatActivity {
         int dayNum = mCal.get(Calendar.DAY_OF_WEEK); //calendar가 가리키는 특정 날짜가 무슨요일인지 알 수 있음
         //1일 - 요일 매칭 시키기 위해 공백 ADD
         for(int i = 1; i<dayNum; i++){
-            dayList.add("");
+            //dayList.add("");
+            ScheduleItem SI = new ScheduleItem("","");
+            dayList.add(SI);
+
         }
         setCalendarDate(mCal.get(Calendar.MONTH)+1);
-        gridAdapter = new GridAdapter(getApplicationContext(), dayList, ScList);
+        gridAdapter = new GridAdapter(getApplicationContext(), dayList);
         gridView.setAdapter(gridAdapter); //초기 설정에만 사용
 
 
@@ -88,7 +93,8 @@ public class ScheduleActivity extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                    dayList= new ArrayList<String>();
+                    //dayList= new ArrayList<String>();
+                     dayList = new ArrayList<ScheduleItem>();
                     mCal.add(Calendar.MONTH,-1);
                     txtYM.setText(mCal.get(Calendar.YEAR) + "년 "
                             + (mCal.get(Calendar.MONTH) + 1)+"월");
@@ -98,7 +104,9 @@ public class ScheduleActivity extends AppCompatActivity {
 
                     //1일 - 요일 매칭 시키기 위해 공백 ADD
                     for (int i = 1; i < dayNum; i++) {
-                        dayList.add("");
+                        //dayList.add("");
+                        ScheduleItem SI = new ScheduleItem("","");
+                        dayList.add(SI);
                     }
 
                     setCalendarDate(mCal.get(Calendar.MONTH) + 1);
@@ -112,7 +120,8 @@ public class ScheduleActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                dayList= new ArrayList<String>();
+                //dayList= new ArrayList<String>();
+                dayList = new ArrayList<ScheduleItem>();
                 mCal.add(Calendar.MONTH,+1);
                 txtYM.setText(mCal.get(Calendar.YEAR) + "년 "
                         + (mCal.get(Calendar.MONTH) + 1)+"월");
@@ -121,7 +130,9 @@ public class ScheduleActivity extends AppCompatActivity {
 
                 //1일 - 요일 매칭 시키기 위해 공백 ADD
                 for(int i = 1; i<dayNum; i++){
-                    dayList.add("");
+                    //dayList.add("");
+                    ScheduleItem SI = new ScheduleItem("","");
+                    dayList.add(SI);
                 }
                 setCalendarDate(mCal.get(Calendar.MONTH)+1);
 
@@ -134,9 +145,10 @@ public class ScheduleActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView parent, View view, int position, long id) {
 
-                selected = Integer.parseInt(dayList.get(position));
+                ScheduleItem SI = new ScheduleItem("","");
                 Intent i = new Intent(ScheduleActivity.this, Add_schedule.class);
-                i.putExtra("날짜", dayList.get(position));
+                seldate = dayList.get(position).getDate();
+                i.putExtra("날짜", seldate);
                 startActivity(i);
 
             }
@@ -146,21 +158,20 @@ public class ScheduleActivity extends AppCompatActivity {
 
         Intent sc_intent = getIntent();
         Bundle intentExtras= sc_intent.getExtras();
-        ScList = new ArrayList<String>();
+
+
         if(intentExtras != null) {
 
             String schedule  =  intentExtras.getString("일정");
-            ScheduleItem SI = new ScheduleItem();
-            SI.setSchedule(schedule);
-            //ScList.set(selected,SI.getSchedule());
-            gridAdapter = new GridAdapter(getApplicationContext(),dayList, ScList);
-            gridAdapter.addItem(SI);
-            gridView.setAdapter(gridAdapter);
+            //ScheduleItem SI = new ScheduleItem("","");
+            //SI.setSchedule(schedule);
+            //dayList.set(,SI);
+
         }
 
 
 
-        gridAdapter = new GridAdapter(getApplicationContext(),dayList, ScList);
+        gridAdapter = new GridAdapter(getApplicationContext(),dayList);
         gridView.setAdapter(gridAdapter); //초기 설정에만 사용
 
 
@@ -172,11 +183,15 @@ public class ScheduleActivity extends AppCompatActivity {
     private void setCalendarDate(int month){
         mCal.set(Calendar.MONTH, month - 1);
         for(int i =0; i<mCal.getActualMaximum(Calendar.DAY_OF_MONTH); i++){
-            dayList.add(""+(i+1));
+           //dayList.add(""+(i+1));
+            ScheduleItem SI = new ScheduleItem(""+(i+1),"");
+            dayList.add(SI);
+
+
         }
 
         /*adapter 내용 업데이트 부분 */
-        gridAdapter = new GridAdapter(getApplicationContext(), dayList, ScList);
+        gridAdapter = new GridAdapter(getApplicationContext(), dayList);
         gridView.setAdapter(gridAdapter); //초기 설정에만 사용
 
     }

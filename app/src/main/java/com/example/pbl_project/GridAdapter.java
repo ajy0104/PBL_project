@@ -13,17 +13,16 @@ import java.util.Calendar;
 import java.util.List;
 
 public class GridAdapter extends BaseAdapter {
-    private final List<String> list;
+   // private ArrayList<String> list;
+    private ArrayList<ScheduleItem> list;
     private final LayoutInflater inflater;
     private Calendar mCal; //캘린더 변수
-    private final List<String> sclist;
-    ScheduleItem SI = new ScheduleItem();
 
 
-    public GridAdapter(Context context, List<String> list, List<String> sclist) {
-        this.list = list;
+
+    public GridAdapter(Context context, ArrayList<ScheduleItem> list ) {
         this.inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        this.sclist = sclist;
+        this.list = list;
     }
 
 
@@ -34,18 +33,13 @@ public class GridAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return list.get(position);
+        return list.get(position).getDate();
     }
 
     @Override
     public long getItemId(int position) {
         return position;
     }
-
-    public void addItem(ScheduleItem SI){
-        sclist.add(SI.getSchedule());
-    }
-
 
 
 
@@ -64,9 +58,11 @@ public class GridAdapter extends BaseAdapter {
         }else{
             holder = (ViewHolder)convertView.getTag();
         }
-        holder.txtGrid.setText(""+getItem(position));
-        holder.txtSchedule.setText(""+sclist.get(position));
 
+        holder.txtGrid.setText(""+getItem(position));
+        //holder.txtSchedule.setText(""+list.get(position).getSchedule());
+        //holder.txtSchedule.setText(""+SI.getSchedule());
+        holder.txtSchedule.setText(""+list.get(position).getSchedule());
 
 
         //해당 날짜 텍스트 컬러 변경
