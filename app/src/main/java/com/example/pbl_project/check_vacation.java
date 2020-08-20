@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class check_vacation extends AppCompatActivity {
 
@@ -39,6 +40,8 @@ public class check_vacation extends AppCompatActivity {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Toast.makeText(check_vacation.this, "로그아웃", Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(check_vacation.this, LoginActivity.class);
                 startActivity(i);
             }
