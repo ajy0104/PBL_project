@@ -60,9 +60,8 @@ public class GridAdapter extends BaseAdapter {
         }
 
         holder.txtGrid.setText(""+getItem(position));
-        //holder.txtSchedule.setText(""+list.get(position).getSchedule());
-        //holder.txtSchedule.setText(""+SI.getSchedule());
         holder.txtSchedule.setText(""+list.get(position).getSchedule());
+
 
 
         //해당 날짜 텍스트 컬러 변경

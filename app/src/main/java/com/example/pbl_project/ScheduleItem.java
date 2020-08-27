@@ -4,8 +4,6 @@ public class ScheduleItem {
     public String Schedule;
     public String Date;
 
-
-
     public ScheduleItem(String Date){
          this.Date = Date;
     }

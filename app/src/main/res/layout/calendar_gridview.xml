@@ -18,6 +18,7 @@
         android:id="@+id/txtSc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/bg_schedule"
         android:gravity="center"
         android:textStyle="bold" />
 

@@ -32,6 +32,7 @@ public class ScheduleActivity extends AppCompatActivity {
         private GridView gridView; //그리드 뷰
         private Calendar mCal; //캘린더 변수
         private String seldate;
+        private int seldate_int;
         private int index;
 
     @Override
@@ -140,34 +141,38 @@ public class ScheduleActivity extends AppCompatActivity {
             }
         });
 
+
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView parent, View view, int position, long id) {
 
-                ScheduleItem SI = new ScheduleItem("","");
+
                 Intent i = new Intent(ScheduleActivity.this, Add_schedule.class);
                 seldate = dayList.get(position).getDate();
                 i.putExtra("날짜", seldate);
                 startActivity(i);
 
+
+
             }
         });
-
-
 
         Intent sc_intent = getIntent();
         Bundle intentExtras= sc_intent.getExtras();
 
-
         if(intentExtras != null) {
 
-            String schedule  =  intentExtras.getString("일정");
-            //ScheduleItem SI = new ScheduleItem("","");
-            //SI.setSchedule(schedule);
-            //dayList.set(,SI);
+
+            String schedule  =  intentExtras.getString("일정");//스피너에서 선택한 일정값
+
+            String index = intentExtras.getString("index");
+            seldate_int = Integer.parseInt(index);//String으로 저장된 선택날짜를 Integer로 변환
+            dayList.get(seldate_int+5).setSchedule(schedule);
 
         }
+
+
 
 
 
