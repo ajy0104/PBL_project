@@ -75,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
                                 Name + "님 환영 합니다.", Toast.LENGTH_SHORT).show();
 
                         Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                        i.putExtra("사원번호",EmployeeNum);
+                        i.putExtra("num", EmployeeNum);
                         Log.d("log",EmployeeNum);
                         startActivity(i);
 

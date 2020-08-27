@@ -8,35 +8,35 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.example.pbl_project.MainActivity.vacation_chart;
 
 public class vacation_list extends AppCompatActivity {
-
-    private ListView listView;
-    ArrayList<Vacation_bean> list = new ArrayList<Vacation_bean>();
-    ArrayAdapter<Vacation_bean> arrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vacation_list);
 
-        //사원번호에 따라 전체 리스트에서 검색해서 listview에 출력
+        ListView listview = (ListView)findViewById(R.id.vacation_list);
 
-        listView = findViewById(R.id.vacation_list);
-        for(int i = 0 ; i < vacation_chart.size() ; i++){
-            list.add(vacation_chart.get(i));
+        List<String> list = new ArrayList<>();
+
+        for(int i = 0; i<vacation_chart.size(); i++){
+            list.add("휴가신청직원 : " + vacation_chart.get(i).getNum());
         }
 
-        arrayAdapter = new ArrayAdapter<Vacation_bean>(this, android.R.layout.simple_list_item_1, list);
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, list);
 
-        listView.setAdapter(arrayAdapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listview.setAdapter(adapter);
+
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //position 몇번째 눌렀는지에 따라 vacation_chart안에 flag값 바꾸기
+                //현재접속 아이디.equals(사수번호 or 팀장 번호)일 경우만 글씨체 변화?
             }
         });
     }

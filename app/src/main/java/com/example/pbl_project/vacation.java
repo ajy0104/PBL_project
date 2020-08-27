@@ -13,6 +13,7 @@ import android.widget.Toast;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+import static com.example.pbl_project.MainActivity.num;
 import static com.example.pbl_project.MainActivity.vacation_chart;
 
 public class vacation extends AppCompatActivity {
@@ -49,6 +50,8 @@ public class vacation extends AppCompatActivity {
 
         edt_teamjang = findViewById(R.id.edt_teamjang);
 
+        vc.setNum(num); //사원번호와 함께 생성자에 저장
+
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,10 +80,9 @@ public class vacation extends AppCompatActivity {
                     vacation_chart.add(vc);
                     //클래스에 휴가신청 정보 몽땅 담기 완료.
 
-                /*if(직급이 사수나 팀장이 아니면)
-                Intent i = new Intent(vacation.this, ) 그냥 vacation.java로 이동. vacation_chart 배열 가지고...
-                직급이 사수나 팀장이면 check_vacation.java로 이동.
-                 */
+                    Intent i = new Intent(vacation.this, MainActivity.class);
+                    startActivity(i);
+
                 }
             }
         });

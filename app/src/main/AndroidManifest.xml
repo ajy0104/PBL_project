@@ -11,26 +11,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".vacation_list"></activity>
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBjMOR3yCYIrB4xodZzpObrsptCRzqCGtE" />
 
-        <activity android:name=".vacation"></activity>
-        <activity android:name=".MainActivity"></activity>
-        <activity android:name=".LoginActivity"></activity>
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".Add_schedule"></activity>
-        <activity android:name=".MapActivity">
-        </activity>
-       <activity android:name=".AttendanceActivity"></activity>
-        <activity android:name=".ScheduleActivity">
+        <activity android:name=".vacation" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".Add_schedule" />
+        <activity android:name=".MapActivity" />
+        <activity android:name=".AttendanceActivity" />
+        <activity android:name=".ScheduleActivity" />
     </application>
 
 </manifest>

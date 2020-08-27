@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+
 public class MainActivity extends AppCompatActivity {
 
     private ImageButton vacation;
@@ -19,7 +20,9 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton User_attend;
     private ImageButton scedule;
     private TextView id;
-    private Button logout;
+    private Button logout, btn_check;
+
+    public static String num = "";
 
     public static ArrayList<Vacation_bean> vacation_chart = new ArrayList<Vacation_bean>();
 
@@ -29,15 +32,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         id = findViewById(R.id.txtId);
-
-        String id2 = getIntent().getStringExtra("사원번호");
-        id.setText(id2);
+        num = getIntent().getStringExtra("num");
+        id.setText(num);
 
         vacation = findViewById(R.id.vacation);
         security = findViewById(R.id.security);
         User_attend = findViewById(R.id.User_attend);
         scedule = findViewById(R.id.schedule);
-        logout = findViewById(R.id.btn_logout2);
+        logout = (Button)findViewById(R.id.btn_logout);
+        btn_check = (Button)findViewById(R.id.btn_check);
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,6 +80,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, ScheduleActivity.class);
+                startActivity(i);
+            }
+        });
+
+        btn_check.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, vacation_list.class);
                 startActivity(i);
             }
         });
