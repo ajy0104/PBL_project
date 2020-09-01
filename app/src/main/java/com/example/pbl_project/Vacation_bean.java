@@ -11,7 +11,7 @@ public class Vacation_bean {
     private String reason;
     private String teamjang_num;
     private String sasu_num;
-    private boolean sasu_flag, teamjang_flag;
+    private boolean sasu_flag=false, teamjang_flag=false;
     private String num;
 
     //get

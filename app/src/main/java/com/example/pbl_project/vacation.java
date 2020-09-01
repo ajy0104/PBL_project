@@ -81,6 +81,7 @@ public class vacation extends AppCompatActivity {
                     //클래스에 휴가신청 정보 몽땅 담기 완료.
 
                     Intent i = new Intent(vacation.this, MainActivity.class);
+                    i.putExtra("num", num);
                     startActivity(i);
 
                 }
