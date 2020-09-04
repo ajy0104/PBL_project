@@ -2,6 +2,7 @@ package com.example.pbl_project;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,9 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -33,7 +37,7 @@ public class ScheduleActivity extends AppCompatActivity {
         private Calendar mCal; //캘린더 변수
         private String seldate;
         private int seldate_int;
-        private int index;
+        private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -155,9 +159,11 @@ public class ScheduleActivity extends AppCompatActivity {
 
 
 
+
             }
         });
 
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("Schedule");
         Intent sc_intent = getIntent();
         Bundle intentExtras= sc_intent.getExtras();
 
@@ -167,8 +173,10 @@ public class ScheduleActivity extends AppCompatActivity {
             String schedule  =  intentExtras.getString("일정");//스피너에서 선택한 일정값
 
             String index = intentExtras.getString("index");
+
             seldate_int = Integer.parseInt(index);//String으로 저장된 선택날짜를 Integer로 변환
-            dayList.get(seldate_int+5).setSchedule(schedule);
+            dayList.get(seldate_int).setSchedule(schedule);
+            mDatabase.child(index).child("sc_name").setValue(dayList.get(seldate_int).getSchedule());
 
         }
 
@@ -178,6 +186,7 @@ public class ScheduleActivity extends AppCompatActivity {
 
         gridAdapter = new GridAdapter(getApplicationContext(),dayList);
         gridView.setAdapter(gridAdapter); //초기 설정에만 사용
+
 
 
     }//onCreate()

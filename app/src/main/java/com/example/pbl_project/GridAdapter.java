@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -17,7 +20,7 @@ public class GridAdapter extends BaseAdapter {
     private ArrayList<ScheduleItem> list;
     private final LayoutInflater inflater;
     private Calendar mCal; //캘린더 변수
-
+    private DatabaseReference mDatabase;
 
 
     public GridAdapter(Context context, ArrayList<ScheduleItem> list ) {
@@ -60,6 +63,7 @@ public class GridAdapter extends BaseAdapter {
         }
 
         holder.txtGrid.setText(""+getItem(position));
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("Schedule");
         holder.txtSchedule.setText(""+list.get(position).getSchedule());
 
 

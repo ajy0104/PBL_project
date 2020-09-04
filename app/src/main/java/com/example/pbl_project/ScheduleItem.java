@@ -3,6 +3,7 @@ package com.example.pbl_project;
 public class ScheduleItem {
     public String Schedule;
     public String Date;
+    public Integer date;
 
     public ScheduleItem(String Date){
          this.Date = Date;
@@ -28,6 +29,10 @@ public class ScheduleItem {
 
     public String getDate(){
         return Date;
+    }
+
+    public Integer getdate(){
+        return date;
     }
 
 
