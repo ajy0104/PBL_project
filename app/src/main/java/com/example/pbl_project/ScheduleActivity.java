@@ -83,7 +83,7 @@ public class ScheduleActivity extends AppCompatActivity {
         //1일 - 요일 매칭 시키기 위해 공백 ADD
         for(int i = 1; i<dayNum; i++){
             //dayList.add("");
-            ScheduleItem SI = new ScheduleItem("","");
+            ScheduleItem SI = new ScheduleItem("","","");
             dayList.add(SI);
 
         }
@@ -110,7 +110,7 @@ public class ScheduleActivity extends AppCompatActivity {
                     //1일 - 요일 매칭 시키기 위해 공백 ADD
                     for (int i = 1; i < dayNum; i++) {
                         //dayList.add("");
-                        ScheduleItem SI = new ScheduleItem("","");
+                        ScheduleItem SI = new ScheduleItem("","","");
                         dayList.add(SI);
                     }
 
@@ -136,7 +136,7 @@ public class ScheduleActivity extends AppCompatActivity {
                 //1일 - 요일 매칭 시키기 위해 공백 ADD
                 for(int i = 1; i<dayNum; i++){
                     //dayList.add("");
-                    ScheduleItem SI = new ScheduleItem("","");
+                    ScheduleItem SI = new ScheduleItem("","","");
                     dayList.add(SI);
                 }
                 setCalendarDate(mCal.get(Calendar.MONTH)+1);
@@ -154,7 +154,9 @@ public class ScheduleActivity extends AppCompatActivity {
 
                 Intent i = new Intent(ScheduleActivity.this, Add_schedule.class);
                 seldate = dayList.get(position).getDate();
+                String selmonth = dayList.get(position).getMonth();
                 i.putExtra("날짜", seldate);
+                i.putExtra("월", selmonth);
                 startActivity(i);
 
 
@@ -173,10 +175,11 @@ public class ScheduleActivity extends AppCompatActivity {
             String schedule  =  intentExtras.getString("일정");//스피너에서 선택한 일정값
 
             String index = intentExtras.getString("index");
-
+            String selmon = intentExtras.getString("month");
             seldate_int = Integer.parseInt(index);//String으로 저장된 선택날짜를 Integer로 변환
             dayList.get(seldate_int).setSchedule(schedule);
-            mDatabase.child(index).child("sc_name").setValue(dayList.get(seldate_int).getSchedule());
+            mDatabase.child(selmon).child(index).child("sc_name").setValue(dayList.get(seldate_int).getSchedule());
+
 
         }
 
@@ -196,9 +199,12 @@ public class ScheduleActivity extends AppCompatActivity {
     //해당월에 표시할 일 수 구하기
     private void setCalendarDate(int month){
         mCal.set(Calendar.MONTH, month - 1);
+
         for(int i =0; i<mCal.getActualMaximum(Calendar.DAY_OF_MONTH); i++){
            //dayList.add(""+(i+1));
-            ScheduleItem SI = new ScheduleItem(""+(i+1),"");
+            int Month = mCal.get(Calendar.MONTH)+1;
+            ScheduleItem SI = new ScheduleItem("",""+(i+1),"");
+            SI.setMonth(Integer.toString(Month));
             dayList.add(SI);
 
 

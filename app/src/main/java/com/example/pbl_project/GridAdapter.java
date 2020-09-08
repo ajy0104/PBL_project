@@ -8,12 +8,17 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import androidx.annotation.NonNull;
 
 public class GridAdapter extends BaseAdapter {
    // private ArrayList<String> list;
@@ -21,7 +26,7 @@ public class GridAdapter extends BaseAdapter {
     private final LayoutInflater inflater;
     private Calendar mCal; //캘린더 변수
     private DatabaseReference mDatabase;
-
+    String schedule;
 
     public GridAdapter(Context context, ArrayList<ScheduleItem> list ) {
         this.inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -47,7 +52,7 @@ public class GridAdapter extends BaseAdapter {
 
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
         ViewHolder holder = null;
         if(convertView == null){
@@ -64,7 +69,22 @@ public class GridAdapter extends BaseAdapter {
 
         holder.txtGrid.setText(""+getItem(position));
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Schedule");
+        /*mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot!=null && snapshot.exists()){
+                    schedule = snapshot.child(list.get(position).getMonth()).child(list.get(position).getDate()).child("sc_name").getValue().toString();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });*/
+
         holder.txtSchedule.setText(""+list.get(position).getSchedule());
+
 
 
 
