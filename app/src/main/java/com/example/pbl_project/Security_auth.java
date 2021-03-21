@@ -3,10 +3,28 @@ package com.example.pbl_project;
 import android.content.Context;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class Security_auth extends AppCompatActivity {
+
+    private DeviceBean deviceBean;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+
+        super.onCreate(savedInstanceState);
+
+
+
+
+
+
+
+
+    }
+
 
     public String getMACAddress(){
         String macAddress="";
