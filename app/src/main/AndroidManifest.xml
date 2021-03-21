@@ -3,6 +3,7 @@
     package="com.example.pbl_project">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/> //와이파이의 상태에 접근할 수 있는 퍼미션 부여
 
     <application
         android:allowBackup="true"
