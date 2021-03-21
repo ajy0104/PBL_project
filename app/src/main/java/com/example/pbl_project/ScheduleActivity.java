@@ -14,8 +14,11 @@ import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -24,6 +27,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -38,6 +42,9 @@ public class ScheduleActivity extends AppCompatActivity {
         private String seldate;
         private int seldate_int;
         private DatabaseReference mDatabase;
+        private String schedule;
+        private String index;
+        private String selmon;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -162,29 +169,30 @@ public class ScheduleActivity extends AppCompatActivity {
 
 
 
+
             }
         });
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Schedule");
+
         Intent sc_intent = getIntent();
         Bundle intentExtras= sc_intent.getExtras();
-
         if(intentExtras != null) {
 
 
-            String schedule  =  intentExtras.getString("일정");//스피너에서 선택한 일정값
+            schedule  =  intentExtras.getString("일정");//스피너에서 선택한 일정값
 
-            String index = intentExtras.getString("index");
-            String selmon = intentExtras.getString("month");
+            index = intentExtras.getString("index");
+            selmon = intentExtras.getString("month");
             seldate_int = Integer.parseInt(index);//String으로 저장된 선택날짜를 Integer로 변환
-            dayList.get(seldate_int).setSchedule(schedule);
-            mDatabase.child(selmon).child(index).child("sc_name").setValue(dayList.get(seldate_int).getSchedule());
+
+
+            mDatabase.child(selmon).child(index).child("sc_name").setValue(schedule);
+            //dayList.get(seldate_int).setSchedule(schedule);
+
 
 
         }
-
-
-
 
 
         gridAdapter = new GridAdapter(getApplicationContext(),dayList);
@@ -214,7 +222,10 @@ public class ScheduleActivity extends AppCompatActivity {
         gridAdapter = new GridAdapter(getApplicationContext(), dayList);
         gridView.setAdapter(gridAdapter); //초기 설정에만 사용
 
+
+
     }
+
 
 
 

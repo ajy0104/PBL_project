@@ -25,8 +25,7 @@ public class GridAdapter extends BaseAdapter {
     private ArrayList<ScheduleItem> list;
     private final LayoutInflater inflater;
     private Calendar mCal; //캘린더 변수
-    private DatabaseReference mDatabase;
-    String schedule;
+
 
     public GridAdapter(Context context, ArrayList<ScheduleItem> list ) {
         this.inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -68,20 +67,6 @@ public class GridAdapter extends BaseAdapter {
         }
 
         holder.txtGrid.setText(""+getItem(position));
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Schedule");
-        /*mDatabase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot!=null && snapshot.exists()){
-                    schedule = snapshot.child(list.get(position).getMonth()).child(list.get(position).getDate()).child("sc_name").getValue().toString();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });*/
 
         holder.txtSchedule.setText(""+list.get(position).getSchedule());
 
