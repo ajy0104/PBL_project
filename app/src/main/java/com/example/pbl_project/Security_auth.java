@@ -5,6 +5,9 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class Security_auth extends AppCompatActivity {
@@ -15,7 +18,7 @@ public class Security_auth extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
+        List<String>Dlist = new ArrayList<>();
 
 
 
