@@ -31,7 +31,8 @@
         <activity android:name=".Add_schedule" />
         <activity android:name=".MapActivity" />
         <activity android:name=".AttendanceActivity" />
-        <activity android:name=".ScheduleActivity">
+        <activity android:name=".ScheduleActivity"/>
+        <activity android:name=".Bio_authActivity">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
 
