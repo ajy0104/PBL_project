@@ -1,12 +1,12 @@
 package com.example.pbl_project;
-
-import android.hardware.biometrics.BiometricPrompt;
+import androidx.biometric.BiometricPrompt;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.concurrent.Executor;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -21,7 +21,7 @@ public class Biometric_auth extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         executor = ContextCompat.getMainExecutor(this);
-        biometricPrompt = new BiometricPrompt(MainActivity.this,
+        biometricPrompt = new BiometricPrompt(this,
                 executor, new BiometricPrompt.AuthenticationCallback() {
             @Override
             public void onAuthenticationError(int errorCode,
@@ -58,10 +58,11 @@ public class Biometric_auth extends AppCompatActivity {
         // Prompt appears when user clicks "Log in".
         // Consider integrating with the keystore to unlock cryptographic operations,
         // if needed by your app.
+        /*
         Button biometricLoginButton = findViewById(R.id.biometric_login);
         biometricLoginButton.setOnClickListener(view -> {
             biometricPrompt.authenticate(promptInfo);
-        });
+        });*/
     }
 
 
