@@ -10,7 +10,7 @@ import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class Security_auth extends AppCompatActivity {
+public class Device_auth extends AppCompatActivity {
 
     private DeviceBean deviceBean;
 
