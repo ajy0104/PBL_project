@@ -1,25 +1,32 @@
 package com.example.pbl_project;
 
-import android.content.Context;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class Device_authActivity extends AppCompatActivity {
 
     private DeviceBean deviceBean;
+    private DevAdapter devAdapter;
+    ArrayList<String> Dlist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        List<String>Dlist = new ArrayList<>();
+        setContentView(R.layout.activity_dev_list);
 
+
+
+        ListView listView = (ListView)findViewById(R.id.dev_list);
+        devAdapter = new DevAdapter(getApplicationContext(), Dlist);
+        listView.setAdapter(devAdapter);
+        Dlist.add(getMACAddress());
 
 
 
