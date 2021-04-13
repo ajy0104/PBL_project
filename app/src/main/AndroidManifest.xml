@@ -6,6 +6,12 @@
 
     <!--와이파이의 상태에 접근할 수 있는 퍼미션 부여 -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
+    <!--<uses-permission android:name="android.permission.UPDATE_DEVICE_STATS"/>-->
+
     <!-- 지문 인식 권한 -->
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
 
@@ -32,12 +38,14 @@
         <activity android:name=".MapActivity" />
         <activity android:name=".AttendanceActivity" />
         <activity android:name=".ScheduleActivity"/>
-        <activity android:name=".Bio_authActivity">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".Bio_authActivity"/>
+        <activity android:name=".Mac_Encrypt"/>
+        <activity android:name=".Device_authActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 
